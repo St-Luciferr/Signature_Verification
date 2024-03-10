@@ -11,6 +11,9 @@ def binarize_signature_image(image_path, threshold_value=128):
     mean_intensity = np.mean(original_image)
     # Apply thresholding
     _, binary_image = cv2.threshold(original_image, mean_intensity, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+    pil_image = Image.fromarray(binary_image)
+    return pil_image
+
 
     return binary_image
 class SiameseDataset:
