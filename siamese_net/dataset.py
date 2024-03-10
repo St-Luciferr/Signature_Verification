@@ -4,6 +4,15 @@ import pandas as pd
 import os
 import torch
 import numpy as np
+import cv2
+def binarize_signature_image(image_path, threshold_value=128):
+    # Read the image
+    original_image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+    mean_intensity = np.mean(original_image)
+    # Apply thresholding
+    _, binary_image = cv2.threshold(original_image, mean_intensity, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+
+    return binary_image
 class SiameseDataset:
     def __init__(self, training_csv=None, training_dir=None, transform=None):
         # used to prepare the labels and images path
@@ -19,8 +28,9 @@ class SiameseDataset:
         image2_path = os.path.join(self.train_dir, self.train_df.iat[index, 1])
 
         # Loading the image
-        img0 = Image.open(image1_path)
-        img1 = Image.open(image2_path)
+       
+        img0 = binarize_signature_image(image1_path,200)
+        img1 = binarize_signature_image(image2_path,200)
         img0 = img0.convert("L")
         img1 = img1.convert("L")
 
