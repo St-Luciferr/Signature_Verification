@@ -31,8 +31,7 @@ class SiameseDataset:
        
         img0 = binarize_signature_image(image1_path,200)
         img1 = binarize_signature_image(image2_path,200)
-        img0 = img0.convert("L")
-        img1 = img1.convert("L")
+    
 
         # Apply image transformations
         if self.transform is not None:
