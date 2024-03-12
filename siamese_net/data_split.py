@@ -28,5 +28,5 @@ def data_split(dataset_dir, outut_dir, split_ratio=0.7):
 
 if __name__ == "__main__":
     dataset_directory = r"E:\QuickFox\Signature\signature_dataset\CEDAR"
-    output_directory = r"E:\QuickFox\Signature\signature_dataset\split"
+    output_directory = r"E:\QuickFox\Signature\signature_dataset\triplet_dataset"
     data_split(dataset_directory, output_directory)
