@@ -5,18 +5,36 @@ import os
 import torch
 import numpy as np
 import cv2
+from torch.utils.data import Dataset
+from torchvision.transforms.functional import pad
+
+
+class SquarePad(torch.nn.Module):
+    def __init__(self):
+        super().__init__()
+        
+
+    def forward(self, image):
+        w, h = image.size
+        max_wh = max(w, h)
+        hp = int((max_wh - w) / 2)
+        vp = int((max_wh - h) / 2)
+        padding = (hp, vp, hp, vp)
+        return pad(image, padding, 255, 'constant')
+
 def binarize_signature_image(image_path, threshold_value=128):
     # Read the image
     original_image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
     mean_intensity = np.mean(original_image)
     # Apply thresholding
     _, binary_image = cv2.threshold(original_image, mean_intensity, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-    pil_image = Image.fromarray(binary_image)
+    img_bgr = cv2.cvtColor(binary_image, cv2.COLOR_GRAY2BGR)
+    pil_image = Image.fromarray(img_bgr)
     return pil_image
 
 
     return binary_image
-class SiameseDataset:
+class SiameseDataset(Dataset):
     def __init__(self, training_csv=None, training_dir=None, transform=None):
         # used to prepare the labels and images path
         self.train_df = pd.read_csv(training_csv)
