@@ -15,6 +15,7 @@ class SquarePad(torch.nn.Module):
         
 
     def forward(self, image):
+        print(image.size)
         w, h = image.size
         max_wh = max(w, h)
         hp = int((max_wh - w) / 2)
@@ -28,9 +29,9 @@ def binarize_signature_image(image_path, threshold_value=128):
     mean_intensity = np.mean(original_image)
     # Apply thresholding
     _, binary_image = cv2.threshold(original_image, mean_intensity, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-    # img_bgr = cv2.cvtColor(binary_image, cv2.COLOR_GRAY2BGR)
-    # pil_image = Image.fromarray(img_bgr)
-    return binary_image
+    img_bgr = cv2.cvtColor(binary_image, cv2.COLOR_GRAY2BGR)
+    pil_image = Image.fromarray(img_bgr)
+    return pil_image
 
 
     return binary_image
