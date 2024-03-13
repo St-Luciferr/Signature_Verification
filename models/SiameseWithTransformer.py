@@ -4,7 +4,7 @@ from torch.nn import TransformerEncoder, TransformerEncoderLayer
 from torch.nn.init import xavier_uniform_
 
 
-class SiameseWithTransformer(nn.Module):
+class SiameseNetworkTransformer(nn.Module):
     def __init__(self, embedding_dim, batch_size, num_heads, num_layers, dropout=0.1):
         super(SiameseNetworkTransformer, self).__init__()
         self.embedding_dim = embedding_dim
